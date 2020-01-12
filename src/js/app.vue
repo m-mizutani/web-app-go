@@ -1,12 +1,14 @@
 <template>
   <div>
     <div>MyApp</div>
-    <button v-on:click="showAlert">This is test</button>
+    <button v-on:click="showMessage">This is test</button>
+    <div>{{message}}</div>
   </div>
 </template>
 <script>
+import axios from "axios";
 const appData = {
-  count: 0
+  message: ""
 };
 
 export default {
@@ -14,13 +16,15 @@ export default {
     return appData;
   },
   methods: {
-    showAlert: showAlert
+    showMessage: showMessage
   }
 };
 
-function showAlert() {
-  console.log("test");
-  alert("test");
+function showMessage() {
+  axios.get("/api/v1/hello").then(res => {
+    console.log(res);
+    appData.message = res.data.message;
+  });
 }
 </script>
 <style>
